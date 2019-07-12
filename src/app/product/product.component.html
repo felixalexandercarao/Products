@@ -1,0 +1,83 @@
+<h1 *ngIf="shadow;else noShadow">
+    products<br>
+    <button (click)="toggleImage()">Show Images</button>
+    <button (click)="toggleShadow()">Shadow</button>
+    <button (click)="search()">Search</button>
+    <input [(ngModel)]="searchString">
+
+
+    <h3>{{searchString}}</h3>
+
+    <table *ngIf="products && products.length;else noProducts">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Code</th>
+                <th>Available</th>
+                <th>Price</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of search()">
+                <td><img *ngIf='isVisible'
+                         [src]='product.imageUrl'
+                         style="width:50px; margin:2px"></td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCode}}</td>
+                <td>{{product.releaseDate}}</td>
+                <td>{{product.price| currency:'USD':'symbol':'1.2-2'}}</td>
+                <td>{{product.starRating}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <ng-template #noProducts>
+        No Products Available
+    </ng-template>
+    <pm-productform (onAddNewProduct)="addNewProduct($event)">
+    </pm-productform>
+</h1>
+
+<ng-template #noShadow>
+    <h3>
+        products<br>
+        <button (click)="toggleImage()">Show Images</button>
+        <button (click)="toggleShadow()">Shadow</button>
+        <button (click)="search()">Search</button>
+        <input [(ngModel)]="searchString">
+
+
+        <h3>{{searchString}}</h3>
+
+        <table *ngIf="search() && search().length;else noProducts">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Code</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of search()">
+                    <td><img *ngIf='isVisible'
+                             [src]='product.imageUrl'
+                             style="width:50px; margin:2px"></td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.releaseDate}}</td>
+                    <td>{{product.price| currency:'USD':'symbol':'1.2-2'}}</td>
+                    <td>{{product.starRating}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #noProducts>
+            No Products Available
+        </ng-template>
+        <pm-productform (onAddNewProduct)="addNewProduct($event)">
+        </pm-productform>
+    </h3>
+</ng-template>
